@@ -19,7 +19,7 @@ def input_students
   def enter_name
     puts "Enter name of student or to quit type exit & return twice"
     puts "NB: Live empty to reserve the position"
-    name = gets.chomp.capitalize
+    name = gets.delete_suffix("\n").capitalize
     name = "Reserved for student" if name.empty?
     return name
   end
@@ -28,7 +28,7 @@ def input_students
     puts "Please enter the first 3 letters of the month of the cohort"
     puts "NB: Live empty for current month"
     while true do
-      month = gets.chomp.capitalize
+      month = gets.delete_suffix("\n").capitalize
       break if ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', ''].include?(month)
     end
     month = Time.now.asctime.split(" ")[1] if month.empty?
@@ -40,7 +40,9 @@ def input_students
   month = enter_month
   while name != "Exit" do
     students << {name: name, cohort: month.to_sym}
-    puts "now we have #{students.count} students"
+    pout = "now we have #{students.count} student"
+    pout << "s" if students.count > 1
+    puts pout
     name = enter_name
     month = enter_month
   end
