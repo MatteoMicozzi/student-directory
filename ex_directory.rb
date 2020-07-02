@@ -1,28 +1,48 @@
 # first we print the list of students
-
+# NB: cob(country of birth), h(hight in cm)
 students = [
-{name: "Dr. Hannibal Lecter", cohort: :november},
-{name: "Darth Vader", cohort: :november},
-{name: "Nurse Ratched", cohort: :november},
-{name: "Michael Corleone", cohort: :november},
-{name: "Alex DeLarge", cohort: :november},
-{name: "The Wicked Witch of the West", cohort: :november},
-{name: "Terminator", cohort: :november},
-{name: "Freddy Krueger", cohort: :november},
-{name: "The Jocker", cohort: :november},
-{name: "Joffrey Baratheon", cohort: :november},
-{name: "Norman Bates", cohort: :november}
+{name: "Dr. Hannibal Lecter", cohort: :Nov, hobby: "eat", cob: "USA", h: 160},
+{name: "Darth Vader", cohort: :Nov, hobby: "Ping Pong", cob: "Milk way", h: 210},
+{name: "Nurse Ratched", cohort: :Nov, hobby: "Darts", cob: "UK", h: 165},
+{name: "Michael Corleone", cohort: :Nov, hobby: "Poker", cob: "IT", h: 180},
+{name: "Alex DeLarge", cohort: :Nov, hobby: "Petting dolls", cob: "FR", h: 166},
+{name: "The Wicked Witch of the West", cohort: :Nov, hobby: "Pray", cob: "USA", h: 168},
+{name: "Terminator", cohort: :Nov, hobby: "Chess", cob: "Austria", h: 205},
+{name: "Freddy Krueger", cohort: :Nov, hobby: "Sharpening", cob: "USA", h: 183},
+{name: "The Jocker", cohort: :Nov, hobby: "Volunteering", cob: "Gotham", h: 175},
+{name: "Joffrey Baratheon", cohort: :Nov, hobby: "Cars", cob: "USA", h: 160},
+{name: "Norman Bates", cohort: :Nov, hobby: "Volley", cob: "UK", h: 162}
 ]
 
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+
+  def enter_name
+    puts "Enter name of student or to quit type exit & return twice"
+    puts "NB: Live empty to reserve the position"
+    name = gets.chomp.capitalize
+    name = "Reserved for student" if name.empty?
+    return name
+  end
+
+  def enter_month
+    puts "Please enter the first 3 letters of the month of the cohort"
+    puts "NB: Live empty for current month"
+    while true do
+      month = gets.chomp.capitalize
+      break if ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', ''].include?(month)
+    end
+    month = Time.now.asctime.split(" ")[1] if month.empty?
+    return month
+  end
+
   students = []
-  name = gets.chomp
-  while !name.empty? do
-    students << {name: name, cohort: :november}
+  name = enter_name
+  month = enter_month
+  while name != "Exit" do
+    students << {name: name, cohort: month.to_sym}
     puts "now we have #{students.count} students"
-    name = gets.chomp
+    name = enter_name
+    month = enter_month
   end
   students
 end
@@ -43,24 +63,39 @@ def less_than_12chrs(stud)
   arr
 end
 
-def print_header
-  puts "The students of Villains Academy"
-  puts "----------------------"
+def grup_by_cohort(stud)
+  arr = []
+  months = [:Jan, :Feb, :Mar, :Apr, :May, :Jun, :Jul, :Aug, :Sep, :Oct, :Nov, :Dec]
+  months.map { |mon| stud.map { |sts| arr << sts if mon == sts[:cohort] } }
+  arr
 end
 
-def print(student)
-  num = 1
-  student.each { |student| puts "#{num}. #{student[:name]} (#{student[:cohort]} cohort)"
-    num += 1 }
+def print_header
+  puts "The students of Villains Academy".center(50)
+  puts "-----------------------------------------------".center(50)
+end
+
+def print(stud)
+  num = 0
+  until num == stud.count
+    name = stud[num]
+    num += 1
+    puts "#{num}.".center(4) + "#{name[:name]}".center(30) + "(#{name[:cohort]} cohort)"
+  end
 end
 
 def print_footer(stu_num)
-puts "Overall, we have #{stu_num.count} great students"
+puts "Overall, we have #{stu_num.count} great students".center(50)
 end
 
-#students = input_students
+# Just add or erase '#' at the beginning of the first group, of methods,
+# to make them ready to run, or not, depends of your choice.
+
+students = input_students
 #students = names_start_by(students)
-students = less_than_12chrs(students)
+#students = less_than_12chrs(students)
+students = grup_by_cohort(students)
+
 print_header
 print(students)
 print_footer(students)
