@@ -1,4 +1,6 @@
-# first we print the list of students
+# Every explanation in line 97
+
+# List of students Hashes in an Array
 # NB: cob(country of birth), h(hight in cm)
 students = [
 {name: "Dr. Hannibal Lecter", cohort: :Nov, hobby: "eat", cob: "USA", h: 160},
@@ -73,7 +75,7 @@ def grup_by_cohort(stud)
 end
 
 def print_header
-  puts "The students of Villains Academy".center(50)
+  puts "The students of Code Academy".center(50)
   puts "-----------------------------------------------".center(50)
 end
 
@@ -94,12 +96,18 @@ end
 
 # Just add or erase '#' at the beginning of the first group, of methods,
 # to make them ready to run, or not, depends of your choice.
+# Every method below are in the same order above if you wonder how it works.
 
 students = input_students
 #students = names_start_by(students)
 #students = less_than_12chrs(students)
 #students = grup_by_cohort(students)
 
-print_header
-print(students)
-print_footer(students)
+if students.count > 0
+  print_header
+  print(students)
+  print_footer(students)
+else
+  puts "We havn't got any student at Code Academy"
+  puts " ------- Consider to Apply ------- "
+end
