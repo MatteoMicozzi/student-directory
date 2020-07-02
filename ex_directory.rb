@@ -84,8 +84,10 @@ def print(stud)
   end
 end
 
-def print_footer(stu_num)
-puts "Overall, we have #{stu_num.count} great students".center(50)
+def print_footer(sts)
+  print_out = " -----  Overall, we have #{sts.count} great student"
+  print_out << "s" if sts.count > 1
+  puts print_out
 end
 
 # Just add or erase '#' at the beginning of the first group, of methods,
@@ -94,7 +96,7 @@ end
 students = input_students
 #students = names_start_by(students)
 #students = less_than_12chrs(students)
-students = grup_by_cohort(students)
+#students = grup_by_cohort(students)
 
 print_header
 print(students)
